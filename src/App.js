@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import AddVisit from "./components/AddVisit/index";
+import Sidebar from "./components/Sidebar";
+import {
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import Header from "./components/Header";
+import Visitee from "./pages/Visitee";
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="">   
+      <Routes>
+        <Route index element={<AddVisit />} />
+        <Route path="visitee" element={<Visitee />} />
+      </Routes>
     </div>
   );
 }
