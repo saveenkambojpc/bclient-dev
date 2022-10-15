@@ -14,7 +14,6 @@ export default function SelectInput({
 
   ...props
 }) {
-  console.log(sx);
   return (
     <div>
       <Autocomplete
@@ -40,11 +39,11 @@ export default function SelectInput({
             label={label}
             sx={{
               "& .MuiAutocomplete-input": {
-                fontSize: 12,
+                fontSize: 11,
               },
             }}
             InputLabelProps={{
-              sx: { fontSize: 12 },
+              sx: { fontSize: 11 },
             }}
           />
         )}

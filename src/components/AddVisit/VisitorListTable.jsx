@@ -151,6 +151,8 @@ export default function VisitorListTable({ tableSize }) {
             
           </TableRow>
         </TableHead>
+
+
         <TableBody>{generateRows(tableSize, singlePointOfContact)}</TableBody>
       </Table>
     </TableContainer>

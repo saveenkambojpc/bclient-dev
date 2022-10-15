@@ -7,7 +7,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
-export default function MaterialUIPickers({ label, current }) {
+export default function MaterialUIPickers({ label, current,helperText }) {
   const handleChange = (newValue) => {};
 
   return (
@@ -18,7 +18,8 @@ export default function MaterialUIPickers({ label, current }) {
         onChange={handleChange}
         renderInput={(params) => (
           <TextField
-            helperText="24-Hour Clock"
+            helperText={helperText}
+            placeholder="Saveen"
             fullWidth
             sx={{
               // "& .css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root": {
@@ -35,7 +36,7 @@ export default function MaterialUIPickers({ label, current }) {
               },
             }}
             InputLabelProps={{
-              style: { fontSize: 12 },
+              style: { fontSize: 11 },
             }}
             size="small"
             {...params}

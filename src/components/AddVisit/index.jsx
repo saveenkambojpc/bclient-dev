@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import React from "react";
-import DateTime from "./DateTime";
+import DateTime from "../helper/DateTime";
 import { useSelector, useDispatch } from "react-redux";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 
@@ -29,8 +29,8 @@ import {
 } from "../../redux/features/addVisit";
 import VisitorListTable from "./VisitorListTable";
 import SearchTextField from "./SearchTextField";
-import SelectInput from "./SelectInput";
-import TextInput from "./TextInput";
+import SelectInput from "../helper/SelectInput";
+import TextInput from "../helper/TextInput";
 import DisableTextInput from "./DisableTextInput";
 import DownloadIcon from "@mui/icons-material/Download";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
@@ -247,7 +247,6 @@ const AddVisit = () => {
                   options={locations}
                   onChange={visitingLocationChange}
                   label={"Visiting Location"}
-                  value={addVisitState.visitingLocation}
                 />
               </div>
               <div className="md:w-1/3 pr-3 w-full mb-5 md:mb-0">
@@ -320,7 +319,6 @@ const AddVisit = () => {
                       ? visitorSubTypeList
                       : vendorSubTypeList
                   }
-                  value={addVisitState.visitorSubType}
                   onChange={visitorSubTypeChange}
                   label={"Visitor Sub-Type"}
                 />
@@ -371,10 +369,10 @@ const AddVisit = () => {
 
             <div className="w-full flex mt-6">
               <div className="md:w-1/3 pr-3">
-                <DateTime label={"Visit Initiation"} current />
+                <DateTime label={"Visit Initiation"} helperText="24-Hour Clock" current />
               </div>
               <div className="md:w-1/3 pr-3">
-                <DateTime label={"Valid Until"} />
+                <DateTime label={"Valid Until"} helperText="24-Hour Clock" />
               </div>
             </div>
 
@@ -425,7 +423,6 @@ const AddVisit = () => {
                     onChange={noOfVisitorChange}
                     label={"Number of Visitor"}
                     options={[1, 2, 3, 4, 5]}
-                    value={addVisitState.noOfVisitor}
                   />
                 </div>
               </div>
@@ -452,7 +449,9 @@ const AddVisit = () => {
                     <SelectInput
                       label={"Wifi Required Duration"}
                       options={wifiDurationList}
+                      
                     />
+                    // <span></span>
                   )}
                 </div>
               </>

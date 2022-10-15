@@ -3,7 +3,7 @@ import { Autocomplete, Chip, InputAdornment, TextField } from "@mui/material";
 import { fontSize } from "@mui/system";
 import React from "react";
 
-const TextInput = ({ onChange, label, hasChip, chipLabel, ...props }) => {
+const TextInput = ({ onChange, label, hasChip, chipLabel,placeholder, ...props }) => {
   return (
     <Autocomplete
       id=""
@@ -16,13 +16,14 @@ const TextInput = ({ onChange, label, hasChip, chipLabel, ...props }) => {
         <>
           <TextField
             {...params}
+            placeholder={placeholder}
             sx={{
               "& .MuiAutocomplete-input ": {
                 fontSize: 12,
               },
             }}
             InputLabelProps={{
-              sx: { fontSize: 12 },
+              sx: { fontSize: 11, fontWeight: 500 },
             }}
             label={label}
             // InputProps={{

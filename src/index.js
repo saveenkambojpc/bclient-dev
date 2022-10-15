@@ -7,12 +7,20 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import { BrowserRouter } from "react-router-dom";
 
+import { unstable_createMuiStrictModeTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/system';
+const theme = unstable_createMuiStrictModeTheme();
+
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

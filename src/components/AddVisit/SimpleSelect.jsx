@@ -5,15 +5,13 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 export default function SimpleSelect({ value }) {
-  const [age, setAge] = React.useState("");
 
   const handleChange = (event) => {
-    setAge(event.target.value);
   };
 
   return (
     <div>
-      <FormControl sx={{ m: 1 }}>
+      <FormControl sx={{ m: 1, minWidth:50 }}>
         <Select
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
@@ -24,7 +22,8 @@ export default function SimpleSelect({ value }) {
           style={{ fontSize: 10, padding: 0 }}
           sx={{
             "& .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon": {
-              position: "static",
+              position: "relative",
+
             },
             "& .css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input ":
               {
@@ -37,9 +36,9 @@ export default function SimpleSelect({ value }) {
                 margin:0
             }
           }}
-          readOnly
+          // readOnly
         >
-          <MenuItem value={value}>{value}</MenuItem>
+          <MenuItem sx={{fontSize:10}} value={value}>{value}</MenuItem>
         </Select>
       </FormControl>
     </div>
