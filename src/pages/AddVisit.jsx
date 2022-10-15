@@ -1,17 +1,14 @@
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import {
-  Autocomplete,
   Button,
   Checkbox,
   Divider,
   FormControlLabel,
-  Input,
   Radio,
-  TextField,
 } from "@mui/material";
 
 import React from "react";
-import DateTime from "../helper/DateTime";
+import DateTime from "../components/helper/DateTime";
 import { useSelector, useDispatch } from "react-redux";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 
@@ -26,16 +23,19 @@ import {
   purposeOfVisit,
   visitorCompanyAddress,
   singlePointOfContact,
-} from "../../redux/features/addVisit";
-import VisitorListTable from "./VisitorListTable";
-import SearchTextField from "./SearchTextField";
-import SelectInput from "../helper/SelectInput";
-import TextInput from "../helper/TextInput";
-import DisableTextInput from "./DisableTextInput";
+} from "../redux/features/addVisit";
+import VisitorListTable from "../components/AddVisit/VisitorListTable";
+import SearchTextField from "../components/AddVisit/SearchTextField";
+import SelectInput from "../components/helper/SelectInput";
+import TextInput from "../components/helper/TextInput";
+import DisableTextInput from "../components/helper/DisableTextInput";
 import DownloadIcon from "@mui/icons-material/Download";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import Sidebar from "../Sidebar";
-import Header from "../Header";
+import Sidebar from "../components/Sidebar";
+import Header from "../components/Header";
+import TextFieldSearch from "../components/helper/TextFieldSearch";
+import { theme } from "../components/helper/Theme";
+import RadioButtonComp from "../components/helper/RadioButtonComp";
 
 const AddVisit = () => {
   const dispatch = useDispatch();
@@ -111,7 +111,6 @@ const AddVisit = () => {
   };
 
   const visitorTypeChange = (e) => {
-    dispatch(visitorSubType());
     dispatch(visitorType());
   };
 
@@ -140,7 +139,6 @@ const AddVisit = () => {
   };
 
   const visitorCompanyAddressChange = (e) => {
-    console.log(e.target.value);
     dispatch(visitorCompanyAddress(e.target.value));
   };
 
@@ -152,8 +150,10 @@ const AddVisit = () => {
     <div className="">
       <Sidebar />
 
-      <div className="ml-52 md:pl-16 pr-4 pl-4">
+      <div className="ml-52 md:pl-20 pr-4 pl-4">
         <Header />
+
+        {/* <TextFieldSearch /> */}
 
         <div className=" w-full  mt-6 text-xs ">
           <div className="row  my-6">
@@ -176,39 +176,21 @@ const AddVisit = () => {
           <div className="flex mt-8 items-center mb-6">
             <span className="mr-5 ml-4 text-gray-500">Visitor for : </span>
             <div className="flex items-center  mx-2">
-              <FormControlLabel
-                value="self"
+              <RadioButtonComp
+                value={"self"}
                 checked={addVisitState.visitorFor === "self"}
                 onChange={visitorforChange}
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: 14,
-                  },
-                  "& .css-ahj2mt-MuiTypography-root": {
-                    fontSize: 12,
-                  },
-                }}
-                control={<Radio />}
-                label="Self"
-                name="self"
+                label={"Self"}
+                name={"visitorFor"}
               />
             </div>
             <div className="flex items-center  mx-2">
-              <FormControlLabel
-                value="others"
-                name="others"
+              <RadioButtonComp
+                value={"others"}
                 checked={addVisitState.visitorFor === "others"}
                 onChange={visitorforChange}
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: 14,
-                  },
-                  "& .css-ahj2mt-MuiTypography-root": {
-                    fontSize: 12,
-                  },
-                }}
-                control={<Radio />}
-                label="Others"
+                label={"Others"}
+                name={"visitorFor"}
               />
             </div>
           </div>
@@ -229,7 +211,9 @@ const AddVisit = () => {
                     1 record Found
                   </h6>
 
-                  <div className="border-t flex items-center justify-between text-[10px] font-medium border-b text-blue-500  border-blue-500 py-1">
+                  <div
+                    className={`border-t flex items-center justify-between text-[10px] font-medium border-b text-blue-500 text-[${theme.palette.primary.main}] py-1`}
+                  >
                     <div className="">
                       <p>KUSH031 - 10022085 - Kush Marvania</p>
                       <p>IT Department - Hybrids Labs</p>
@@ -274,54 +258,41 @@ const AddVisit = () => {
             <div className="flex items-center my-6">
               <span className="mr-5 ml-4 text-gray-500">Visitor type : </span>
               <div className="flex items-center  mx-2">
-                <FormControlLabel
-                  value="visitor"
-                  name="visitor-type"
+                <RadioButtonComp
+                  value={"visitor"}
                   checked={addVisitState.visitorType === "visitor"}
                   onChange={visitorTypeChange}
-                  sx={{
-                    "& .MuiSvgIcon-root": {
-                      fontSize: 14,
-                    },
-                    "& .css-ahj2mt-MuiTypography-root": {
-                      fontSize: 12,
-                    },
-                  }}
-                  control={<Radio />}
-                  label="Visitor"
+                  label={"Visitor"}
+                  name={"visitorType"}
                 />
               </div>
               <div className="flex items-center  mx-2">
-                <FormControlLabel
-                  value="vendro"
-                  name="visitor-type"
+                <RadioButtonComp
+                  value={"vendor"}
                   checked={addVisitState.visitorType === "vendor"}
                   onChange={visitorTypeChange}
-                  sx={{
-                    "& .MuiSvgIcon-root": {
-                      fontSize: 14,
-                    },
-                    "& .css-ahj2mt-MuiTypography-root": {
-                      fontSize: 12,
-                    },
-                  }}
-                  control={<Radio />}
-                  label="Vendor"
+                  label={"Vendor"}
+                  name={"visitorType"}
                 />
               </div>
             </div>
 
             <div className="w-full">
               <div className="md:w-1/3 pr-3">
-                <SelectInput
-                  options={
-                    addVisitState.visitorType === "visitor"
-                      ? visitorSubTypeList
-                      : vendorSubTypeList
-                  }
-                  onChange={visitorSubTypeChange}
-                  label={"Visitor Sub-Type"}
-                />
+                {addVisitState.visitorType == "visitor" && (
+                  <SelectInput
+                    options={visitorSubTypeList}
+                    onChange={visitorSubTypeChange}
+                    label={"Visitor Sub-Type"}
+                  />
+                )}
+                {addVisitState.visitorType === "vendor" && (
+                  <SelectInput
+                    options={vendorSubTypeList}
+                    onChange={visitorSubTypeChange}
+                    label={"Visitor Sub-Type"}
+                  />
+                )}
               </div>
 
               {addVisitState.visitorSubType === "Other" && (
@@ -369,7 +340,11 @@ const AddVisit = () => {
 
             <div className="w-full flex mt-6">
               <div className="md:w-1/3 pr-3">
-                <DateTime label={"Visit Initiation"} helperText="24-Hour Clock" current />
+                <DateTime
+                  label={"Visit Initiation"}
+                  helperText="24-Hour Clock"
+                  current
+                />
               </div>
               <div className="md:w-1/3 pr-3">
                 <DateTime label={"Valid Until"} helperText="24-Hour Clock" />
@@ -449,7 +424,6 @@ const AddVisit = () => {
                     <SelectInput
                       label={"Wifi Required Duration"}
                       options={wifiDurationList}
-                      
                     />
                     // <span></span>
                   )}
@@ -498,7 +472,11 @@ const AddVisit = () => {
               <div className="">
                 <Button
                   size="small"
-                  style={{ fontSize: 10, marginRight: 5 }}
+                  style={{
+                    fontSize: 10,
+                    marginRight: 5,
+                    backgroundColor: theme.palette.primary.main,
+                  }}
                   variant="contained"
                   startIcon={<DownloadIcon />}
                 >
@@ -506,7 +484,10 @@ const AddVisit = () => {
                 </Button>
                 <Button
                   size="small"
-                  style={{ fontSize: 10 }}
+                  style={{
+                    fontSize: 10,
+                    backgroundColor: theme.palette.primary.main,
+                  }}
                   variant="contained"
                   startIcon={<UploadFileIcon />}
                 >

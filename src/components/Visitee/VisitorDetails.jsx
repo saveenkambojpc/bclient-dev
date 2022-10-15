@@ -1,5 +1,5 @@
 import { Person } from "@mui/icons-material";
-import { Avatar, FormControlLabel, TextField, Typography } from "@mui/material";
+import { Avatar, Typography } from "@mui/material";
 import { deepOrange, blue } from "@mui/material/colors";
 import React from "react";
 import SelectInput from "../helper/SelectInput";
@@ -7,20 +7,27 @@ import TextInput from "../helper/TextInput";
 import DateTime from "../helper/DateTime";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import UploadedFile from "./UploadedFile";
-import RadioButton from "../helper/RadioButton";
 import { theme } from "../helper/Theme";
-import Checkbox from "@mui/material/Checkbox";
 import CheckBoxComp from "../helper/CheckBoxComp";
 
-const VisitorDetails = ({no}) => {
+const VisitorDetails = ({ no }) => {
   return (
     <div className="mb-6">
       <div className="flex items-center space-x-3 mb-6">
-        <Avatar sx={{ bgcolor: blue[700], width: 28, height: 28 }}>
+        <Avatar sx={{ bgcolor: theme.palette.primary.main, width: 28, height: 28 }}>
           <Person sx={{ width: 16 }} />
         </Avatar>
 
-        <Typography style={{color:theme.palette.primary.main,textTransform:'uppercase',fontSize:10, fontWeight:600}}>Visitor {no}</Typography>
+        <Typography
+          style={{
+            color: theme.palette.primary.main,
+            textTransform: "uppercase",
+            fontSize: 10,
+            fontWeight: 600,
+          }}
+        >
+          Visitor {no}
+        </Typography>
       </div>
 
       <div className="mb-4 flex mb-6">
@@ -29,7 +36,8 @@ const VisitorDetails = ({no}) => {
             <SelectInput
               label={"Country Code"}
               options={["+91"]}
-              defaultValue={"+91"}
+              value={"+91"}
+              readOnly
             />
           </div>
           <div className="w-2/3">
@@ -55,7 +63,7 @@ const VisitorDetails = ({no}) => {
           <SelectInput
             label="Government ID Type"
             options={["Aadhar Card"]}
-            value="Aadhar Card"
+            defaultValue="Aadhar Card"
           />
         </div>
         <div className="pr-3 w-1/2">
@@ -73,13 +81,17 @@ const VisitorDetails = ({no}) => {
         </h4>
 
         <div className="">
-          <label class="flex justify-center w-full  px-4 transition bg-white border-2 border-gray-200 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-300 focus:outline-none p-3">
-            <div class="flex flex-col items-center space-y-2">
+          <label className="flex justify-center w-full  px-4 transition bg-white border-2 border-gray-200 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-300 focus:outline-none p-3">
+            <div className="flex flex-col items-center space-y-2">
               <Avatar sx={{ width: 26, height: 26, bgcolor: blue[50] }}>
-                <UploadFileIcon sx={{ color: blue[600], fontSize: 16 }} />
+                <UploadFileIcon
+                  sx={{ color: theme.palette.primary.main, fontSize: 16 }}
+                />
               </Avatar>
-              <p class="font-medium text-xs text-gray-600">
-                <span class="underline text-blue-500">Click to upload </span>
+              <p className={`font-medium text-xs `}>
+                <span className={`underline text-[${theme.palette.primary.main}]`}>
+                  Click to upload{" "}
+                </span>
                 or drag and drop
               </p>
 
@@ -87,7 +99,7 @@ const VisitorDetails = ({no}) => {
                 PNG, JPG or PDF (max. 3MB)
               </p>
             </div>
-            <input type="file" name="file_upload" class="hidden" />
+            <input type="file" name="file_upload" className="hidden" />
           </label>
         </div>
 
@@ -96,7 +108,9 @@ const VisitorDetails = ({no}) => {
         </div>
 
         <div className="text-xs">
-          <Typography sx={{fontSize:12}}>Select the accessories to carry along with you</Typography>
+          <Typography sx={{ fontSize: 12 }}>
+            Select the accessories to carry along with you
+          </Typography>
 
           <div className="flex justify-around py-3">
             <CheckBoxComp label="Laptop" />

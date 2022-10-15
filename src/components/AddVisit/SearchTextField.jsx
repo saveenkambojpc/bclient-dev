@@ -1,7 +1,12 @@
 import React from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { theme } from "../helper/Theme";
 
-const SearchTextField = ({ placeholder,helperText }) => {
+const SearchTextField = ({ placeholder, helperText }) => {
+
+  // color
+  const {main} = theme.palette.primary
+
   return (
     <>
       <div className="w-full h-9 flex items-center  justify-between">
@@ -13,8 +18,8 @@ const SearchTextField = ({ placeholder,helperText }) => {
           id=""
         />
         <SearchOutlinedIcon
-          className=" bg-blue-600 p-2 rounded-r text-white cursor-pointer"
-          sx={{ fontSize: 36, color: "white", border: "2px solid #2563eb" }}
+          className={` bg-[${main}] p-2 rounded-r text-white cursor-pointer`}
+          sx={{ fontSize: 36, color: "white" }}
         />
       </div>
       <span className="text-[8px] mt-2 text-gray-500 pl-3">{helperText}</span>

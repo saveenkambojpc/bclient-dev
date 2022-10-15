@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <div className="flex justify-end items-center space-x-2 py-4">
       <Avatar sx={{ width: 26, height: 26 }}>
-        <PersonIcon />
+        <PersonIcon style={{fontSize:16}} />
       </Avatar>
       <Typography style={{ fontSize: 12 }}>Hailey Patel</Typography>
       <IconButton aria-label="notification">

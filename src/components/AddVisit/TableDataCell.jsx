@@ -2,7 +2,7 @@ import { TableCell, TextField } from "@mui/material";
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import SelectInput from "../helper/SelectInput";
-import SimpleSelect from "./SimpleSelect";
+import SimpleSelect from "../helper/SimpleSelect";
 
 const TableDataCell = ({
   width,

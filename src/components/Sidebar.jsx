@@ -9,6 +9,7 @@ import SettingsOutlined from "@mui/icons-material/SettingsOutlined";
 import VisibilityOutlined from "@mui/icons-material/VisibilityOutlined";
 import React from "react";
 import Logo from "./helper/Logo";
+import { theme } from "./helper/Theme";
 
 const Sidebar = () => {
   const iconSize = "16px";
@@ -52,7 +53,9 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-52 border-r fixed top-0 h-full">
+    <div className="w-56 fixed top-0 h-full pr-3">
+      <div className="border-r">
+
       <div className="py-4 pl-10">
         <Logo />
       </div>
@@ -63,7 +66,7 @@ const Sidebar = () => {
             <li
               key={index}
               className={`flex p-2 px-3 cursor-pointer items-center  ${
-                index === 0 ? "bg-blue-600 text-white" : "hover:bg-gray-100"
+                index === 0 ? `bg-[${theme.palette.primary.main}] text-white` : "hover:bg-gray-100"
               } `}
             >
               {item.component}
@@ -72,6 +75,7 @@ const Sidebar = () => {
           );
         })}
       </ul>
+      </div>
     </div>
   );
 };

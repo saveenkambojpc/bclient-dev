@@ -1,6 +1,4 @@
 import { Button, Typography } from "@mui/material";
-import { blue } from "@mui/material/colors";
-import { createTheme } from "@mui/system";
 import React from "react";
 import Logo from "../components/helper/Logo";
 import TextInput from "../components/helper/TextInput";
@@ -46,6 +44,7 @@ const Visitee = () => {
 
         <VisitorDetails no={1} />
         <VisitorDetails no={2} />
+        <VisitorDetails no={3} />
 
         <Button variant="contained" style={{fontSize:10}} size="small">
           Complete Visit Invite

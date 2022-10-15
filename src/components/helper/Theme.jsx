@@ -7,9 +7,13 @@ export const theme = createTheme({
       main: blue[700],
       muted: "#666666",
       black: "#212121",
+
+
     },
     secondary: {
       main: green[500],
     },
   },
 });
+
+// export const palette = 
