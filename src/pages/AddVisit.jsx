@@ -5,6 +5,7 @@ import {
   Divider,
   FormControlLabel,
   Radio,
+  Typography,
 } from "@mui/material";
 
 import React from "react";
@@ -25,7 +26,6 @@ import {
   singlePointOfContact,
 } from "../redux/features/addVisit";
 import VisitorListTable from "../components/AddVisit/VisitorListTable";
-import SearchTextField from "../components/AddVisit/SearchTextField";
 import SelectInput from "../components/helper/SelectInput";
 import TextInput from "../components/helper/TextInput";
 import DisableTextInput from "../components/helper/DisableTextInput";
@@ -33,9 +33,9 @@ import DownloadIcon from "@mui/icons-material/Download";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import TextFieldSearch from "../components/helper/TextFieldSearch";
 import { theme } from "../components/helper/Theme";
 import RadioButtonComp from "../components/helper/RadioButtonComp";
+import SearchTextField from "../components/helper/SearchTextField";
 
 const AddVisit = () => {
   const dispatch = useDispatch();
@@ -152,29 +152,71 @@ const AddVisit = () => {
 
       <div className="ml-52 md:pl-20 pr-4 pl-4">
         <Header />
-
-        {/* <TextFieldSearch /> */}
-
+   
         <div className=" w-full  mt-6 text-xs ">
           <div className="row  my-6">
             <div className="w-full">
-              <h4 className="text-sm font-medium ">Add Visit</h4>
-              <h5 className="text-xs mt-2 flex items-center">
+              <Typography
+                style={{
+                  color: theme.palette.primary.lightText87,
+                  fontSize: theme.fontSize.font14,
+                  fontWeight: 500,
+                }}
+              >
+                Add Visit
+              </Typography>
+              <h5 className=" mt-2 flex items-center">
                 <ArticleOutlinedIcon
-                  sx={{ fontSize: "12px" }}
-                  className="text-gray-500"
+                  style={{
+                    width: 12,
+                    color: theme.palette.primary.lightText54,
+                    marginLeft: 6,
+                  }}
                 />
-                <span className="ml-1 text-gray-500 mr-2">Visitor Pass / </span>
+                <Typography
+                  style={{
+                    color: theme.palette.primary.lightText60,
+                    marginLeft: 6,
+                    fontWeight: theme.fontWeight.weight400,
+                    fontSize: 12,
+                  }}
+                >
+                  Visitor Pass /
+                </Typography>
 
-                <PersonAdd sx={{ fontSize: "12px" }} />
-                <span className="ml-1">Add Visit</span>
+                <PersonAdd
+                  style={{
+                    width: theme.width.width12,
+                    color: "#212121",
+                    marginLeft: 6,
+                  }}
+                />
+                <Typography
+                  style={{
+                    color: theme.palette.primary.lightText87,
+                    marginLeft: 6,
+                    fontWeight: theme.fontWeight.weight400,
+                    fontSize: 12,
+                  }}
+                >
+                  Add Visit
+                </Typography>
               </h5>
             </div>
           </div>
 
           {/* Radio Button */}
-          <div className="flex mt-8 items-center mb-6">
-            <span className="mr-5 ml-4 text-gray-500">Visitor for : </span>
+          <div className="flex mt-8 items-center mb-3">
+            <span className="mr-5 ml-4 ">
+              <Typography
+                style={{
+                  color: theme.palette.primary.lightText60,
+                  fontSize: 12,
+                }}
+              >
+                Visitor for :{" "}
+              </Typography>
+            </span>
             <div className="flex items-center  mx-2">
               <RadioButtonComp
                 value={"self"}
@@ -225,7 +267,7 @@ const AddVisit = () => {
               </div>
             )}
 
-            <div className="flex flex-wrap my-6">
+            <div className="flex flex-wrap mt-3">
               <div className="md:w-1/3 pr-3 w-full mb-5 md:mb-0">
                 <SelectInput
                   options={locations}
@@ -253,9 +295,9 @@ const AddVisit = () => {
             <Divider />
           </div>
 
-          <div className="my-6">
+          <div className="mb-6">
             {/* Radio Button */}
-            <div className="flex items-center my-6">
+            <div className="flex items-center mb-6">
               <span className="mr-5 ml-4 text-gray-500">Visitor type : </span>
               <div className="flex items-center  mx-2">
                 <RadioButtonComp
@@ -384,10 +426,15 @@ const AddVisit = () => {
                   onClick={singlePointContactChange}
                   size="small"
                 />
-                <span>
+                <Typography
+                  style={{
+                    color: theme.palette.primary.lightText87,
+                    fontSize: 12,
+                  }}
+                >
                   Add a single point of contact (Authorize and individual
                   visitors to add other visitors)?
-                </span>
+                </Typography>
               </div>
             )}
 
@@ -404,12 +451,17 @@ const AddVisit = () => {
             )}
             {addVisitState.visitorType === "visitor" && (
               <>
-                <div className="my-3 mx-3 text-gray-500">
-                  <span>
+                <div className="my-3 mx-3">
+                  <Typography
+                    style={{
+                      color: theme.palette.primary.lightText47,
+                      fontSize: 12,
+                    }}
+                  >
                     Note: If a visitor carries a laptop and require an internet
                     access. Please tick internet and duration. (Only those
                     carries laptop will be issued wifi access key)
-                  </span>
+                  </Typography>
                 </div>
                 <div className="flex items-center my-3">
                   <Checkbox
@@ -417,7 +469,14 @@ const AddVisit = () => {
                     size="small"
                     onChange={wifiRequiredChange}
                   />
-                  <span>Wi-Fi Access Required?</span>
+                  <Typography
+                    style={{
+                      color: theme.palette.primary.lightText87,
+                      fontSize: 12,
+                    }}
+                  >
+                    Wi-Fi Access Required?
+                  </Typography>
                 </div>
                 <div className="md:w-1/3 pr-3">
                   {addVisitState.isWifiRequired && (
@@ -464,10 +523,25 @@ const AddVisit = () => {
           <div className="my-6">
             <div className="row  ml-3  my-6 flex items-center justify-between">
               <div className="">
-                <h4 className="text-xs font-medium ">Visitor's List</h4>
-                <h5 className="text-xs mt-2 flex items-center text-gray-500">
+                <Typography
+                  style={{
+                    color: theme.palette.primary.zBlack,
+                    fontSize: 12,
+                    fontWeight: 500,
+                  }}
+                >
+                  Visitor's List
+                </Typography>
+
+                <Typography
+                  style={{
+                    color: theme.palette.primary.lightText47,
+                    fontSize: 10,
+                    fontWeight: 400,
+                  }}
+                >
                   Enter Mobile Number or Email to fetch the details if available
-                </h5>
+                </Typography>
               </div>
               <div className="">
                 <Button
@@ -495,9 +569,21 @@ const AddVisit = () => {
                 </Button>
               </div>
             </div>
-            <div className="my-6 mb-20">
+            <div className="my-6">
               <VisitorListTable tableSize={addVisitState.noOfVisitor} />
             </div>
+
+            <Button
+              size="medium"
+              style={{
+                fontSize: 10,
+                backgroundColor: theme.palette.primary.main,
+              }}
+              variant="contained"
+              // startIcon={<DownloadIcon />}
+            >
+              Add Visit
+            </Button>
           </div>
         </div>
       </div>

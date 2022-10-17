@@ -35,10 +35,10 @@ export default function SelectInput({
             padding: 0,
           },
           '& .css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':{
-            borderColor:theme.palette.primary.main
+            borderColor:theme.palette.primary.main,
         },
         "& .css-1pnb9mc-MuiFormLabel-root-MuiInputLabel-root.Mui-focused":{
-          color:theme.palette.primary.main
+          color:theme.palette.primary.main,
       }
         }}
         renderInput={(params) => (
@@ -47,12 +47,12 @@ export default function SelectInput({
             label={label}
             sx={{
               "& .MuiAutocomplete-input": {
-                fontSize: 11,
+                fontSize: 12,
               },
     
             }}
             InputLabelProps={{
-              sx: { fontSize: 11 },
+              sx: { fontSize: 12 },
             }}
           />
         )}

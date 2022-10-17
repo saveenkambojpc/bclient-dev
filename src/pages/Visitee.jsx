@@ -7,38 +7,39 @@ import VisitorDetails from "../components/Visitee/VisitorDetails";
 
 const Visitee = () => {
   return (
-    <div className="md:w-3/4 m-auto  w-full flex flex-wrap my-12 ">
-      <div className="left md:w-80  pl-3 md:fixed">
-        <Logo />
+    <div className="md:w-3/4 m-auto w-full flex flex-wrap my-12 md:px-0 px-3 ">
+      <div className="left md:fixed w-full">
+ 
 
-        <div className="my-6">
-          <Typography style={{fontWeight:600, color:theme.palette.primary.black}}>Visit Invite</Typography>
+        <div className="my-6 text-center md:text-left ">
+        <Logo />
+          <Typography style={{fontSize:16,color:theme.palette.primary.lightText87, fontWeight:500}}>Visit Invite</Typography>
         </div>
         <div className="">
-          <Typography style={{ fontSize: 12 }}>
+          <Typography style={{ color:theme.palette.primary.lightText87, fontWeight:400,fontSize:11 }}>
             Sent By: Hailey Patel
           </Typography>
-          <Typography style={{ fontSize: 12 }}>
+          <Typography style={{ color:theme.palette.primary.lightText87, fontWeight:400,fontSize:11 }}>
             Visit from 13-09-2020 05:00 to 16-09-2022 13:30
           </Typography>
-          <Typography style={{ fontSize: 12 }}>
+          <Typography style={{ color:theme.palette.primary.lightText87, fontWeight:400,fontSize:11 }}>
             SPOC: Mr Saveen Kamboj
           </Typography>
-          <Typography style={{ fontSize: 12 }}>
+          <Typography style={{ color:theme.palette.primary.lightText87, fontWeight:400,fontSize:11 }}>
             SPOC mobile number : +91 28934 39495
           </Typography>
         </div>
       </div>
-      <div className="right md:w-2/3  w-full pl-2 md:ml-80 ">
+      <div className="right w-full md:ml-80 md:pl-4 ">
         <div className="mb-6 ">
           <Typography
-            style={{ fontSize: 10, color: theme.palette.primary.muted }}
+            style={{ fontSize: 10, color: theme.palette.primary.lightText60, fontWeight:500 }}
           >
             Note: You can add only 3 visitors
           </Typography>
         </div>
 
-        <div className="w-full md:w-1/2 pr-3 mb-6">
+        <div className="w-full md:w-1/2 md:pr-3 mb-6">
           <TextInput label="Company's Name/Address" />
         </div>
 

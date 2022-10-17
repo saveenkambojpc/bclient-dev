@@ -9,29 +9,33 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import UploadedFile from "./UploadedFile";
 import { theme } from "../helper/Theme";
 import CheckBoxComp from "../helper/CheckBoxComp";
+import Date from "../helper/Date";
 
 const VisitorDetails = ({ no }) => {
   return (
     <div className="mb-6">
       <div className="flex items-center space-x-3 mb-6">
-        <Avatar sx={{ bgcolor: theme.palette.primary.main, width: 28, height: 28 }}>
-          <Person sx={{ width: 16 }} />
+        <Avatar
+          sx={{ bgcolor: theme.palette.primary.main, width: 28, height: 28 }}
+        >
+          <Person style={{ fontSize: 16 }} />
         </Avatar>
 
         <Typography
           style={{
             color: theme.palette.primary.main,
             textTransform: "uppercase",
-            fontSize: 10,
-            fontWeight: 600,
+            fontSize: 9,
+            letterSpacing: "0.46px",
+            fontWeight: 500,
           }}
         >
           Visitor {no}
         </Typography>
       </div>
 
-      <div className="mb-4 flex mb-6">
-        <div className="pr-3 w-1/2 flex">
+      <div className="mb-4 flex flex-wrap ">
+        <div className="md:pr-3 md:w-1/2 w-full flex mb-4 md:mb-0">
           <div className="w-1/3 mr-3">
             <SelectInput
               label={"Country Code"}
@@ -40,33 +44,34 @@ const VisitorDetails = ({ no }) => {
               readOnly
             />
           </div>
-          <div className="w-2/3">
+          <div className="w-2/3 ">
             <TextInput label="Mobile No" />
           </div>
         </div>
 
-        <div className="pr-3 w-1/2">
+        <div className="md:pr-3 md:w-1/2 w-full">
           <TextInput label="Email ID" />
         </div>
       </div>
 
-      <div className="mb-4 flex">
-        <div className="pr-3 w-1/2">
+      <div className="mb-4 flex flex-wrap">
+        <div className="md:pr-3 md:w-1/2 w-full mb-4 md:mb-0">
           <TextInput label="Name" placeholder="Firstname Lastname" />
         </div>
-        <div className="pr-3 w-1/2">
-          <DateTime label="Date of Birth" />
+        <div className="md:pr-3 md:w-1/2 w-full">
+          {/* <DateTime label="Date of Birth" /> */}
+          <Date />
         </div>
       </div>
-      <div className="mb-4 flex">
-        <div className="pr-3 w-1/2">
+      <div className="mb-4 flex flex-wrap">
+        <div className="md:pr-3 md:w-1/2 w-full md:mb-0 mb-4">
           <SelectInput
             label="Government ID Type"
             options={["Aadhar Card"]}
             defaultValue="Aadhar Card"
           />
         </div>
-        <div className="pr-3 w-1/2">
+        <div className="md:pr-3 md:w-1/2 w-full">
           <TextInput
             label="Government ID Number"
             placeholder="1234 2345 3456"
@@ -75,29 +80,50 @@ const VisitorDetails = ({ no }) => {
       </div>
 
       <div className="pr-3">
-        <h4 className="text-xs font-medium mb-4">
-          Upload Government ID
-          <span className="text-gray-500 text-xs font-light"> (optional)</span>
-        </h4>
-
+        <div className="mb-4">
+          <Typography
+            style={{
+              color: theme.palette.primary.lightText,
+              fontWeight: 500,
+              fontSize: 11,
+            }}
+          >
+            Upload Government ID
+            <Typography
+              style={{ display: "inline", fontWeight: 300, fontSize: 11 }}
+            >
+              (optional)
+            </Typography>
+          </Typography>
+        </div>
         <div className="">
           <label className="flex justify-center w-full  px-4 transition bg-white border-2 border-gray-200 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-300 focus:outline-none p-3">
             <div className="flex flex-col items-center space-y-2">
-              <Avatar sx={{ width: 26, height: 26, bgcolor: blue[50] }}>
+              <Avatar sx={{ width: 28, height: 28, bgcolor: blue[50] }}>
                 <UploadFileIcon
                   sx={{ color: theme.palette.primary.main, fontSize: 16 }}
                 />
               </Avatar>
-              <p className={`font-medium text-xs `}>
-                <span className={`underline text-[${theme.palette.primary.main}]`}>
-                  Click to upload{" "}
+              <p className="">
+                <span
+                  className={`underline text-[${theme.palette.primary.main}]`}
+                >
+                  <Typography
+                    style={{ fontSize: 12, display: "inline", marginRight: 3 }}
+                  >
+                    Click to upload
+                  </Typography>
                 </span>
-                or drag and drop
+                <Typography style={{ fontSize: 12, display: "inline" }}>
+                  or drag and drop
+                </Typography>
               </p>
 
-              <p className="text-gray-400 text-[10px] font-medium">
-                PNG, JPG or PDF (max. 3MB)
-              </p>
+              <Typography
+                style={{ fontSize: 10, color: theme.palette.primary.muted }}
+              >
+                PNG, JPG or PDF (max . 3MB)
+              </Typography>
             </div>
             <input type="file" name="file_upload" className="hidden" />
           </label>
@@ -107,15 +133,24 @@ const VisitorDetails = ({ no }) => {
           <UploadedFile />
         </div>
 
+        {/* Checkbox */}
         <div className="text-xs">
-          <Typography sx={{ fontSize: 12 }}>
+          <Typography
+            style={{ color: theme.palette.primary.lightText, fontSize: 12 }}
+          >
             Select the accessories to carry along with you
           </Typography>
 
-          <div className="flex justify-around py-3">
-            <CheckBoxComp label="Laptop" />
-            <CheckBoxComp label="Camera" />
-            <CheckBoxComp label="Pendrive" />
+          <div className="md:flex justify-around py-3">
+            <div className="">
+              <CheckBoxComp label="Laptop" />
+            </div>
+            <div className="">
+              <CheckBoxComp label="Camera" />
+            </div>
+            <div className="">
+              <CheckBoxComp label="Pendrive" />
+            </div>
           </div>
         </div>
       </div>

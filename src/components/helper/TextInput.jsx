@@ -23,7 +23,7 @@ const TextInput = ({ onChange, label, hasChip, chipLabel,placeholder, ...props }
               },
             }}
             InputLabelProps={{
-              sx: { fontSize: 11, fontWeight: 500 },
+              sx: { fontSize: 12, fontWeight: 400 },
             }}
             label={label}
             // InputProps={{

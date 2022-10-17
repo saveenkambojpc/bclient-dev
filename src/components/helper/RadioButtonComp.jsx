@@ -10,11 +10,13 @@ const RadioButtonComp = ({checked,value,label,name,onChange}) => {
       onChange={onChange}
       sx={{
         "& .MuiSvgIcon-root": {
-          fontSize: 14,
-          color:theme.palette.primary.main
+          color:theme.palette.primary.main,
+          width:16
         },
         "& .css-ahj2mt-MuiTypography-root": {
-          fontSize: 12,
+          fontSize:12,
+          color:theme.palette.primary.lightText87
+
         },
    
    
