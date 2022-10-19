@@ -22,6 +22,11 @@ const Sidebar = () => {
       name: "View My Visitors",
       component: <VisibilityOutlined sx={{ fontSize: iconSize }} />,
     },
+    ,
+    {
+      name:'Temporary Pass',
+      component: <LogoutOutlined sx={{fontSize:iconSize}} />
+    },
     {
       name: "Reports",
       component: <ContentPasteOutlined sx={{ fontSize: iconSize }} />,
@@ -49,7 +54,7 @@ const Sidebar = () => {
     {
       name: "Logout",
       component: <LogoutOutlined sx={{ fontSize: iconSize }} />,
-    },
+    }
   ];
 
   return (
