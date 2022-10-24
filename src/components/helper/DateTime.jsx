@@ -9,18 +9,26 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DateRangeOutlined } from "@mui/icons-material";
 import { theme } from "./Theme";
 
-export default function MaterialUIPickers({ label, current, helperText }) {
-  const handleChange = (newValue) => {};
+export default function MaterialUIPickers({
+  label,
+  helperText,
+  onChange,
+  disablePast,
+  readOnly,
+  value
+}) {
 
+  // const [value, setValue] = React.useState(dayjs('2022-04-07'));
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateTimePicker
+        readOnly={readOnly}
         label={label}
         ampm={false}
-        value={current ? dayjs() : null}
-        onChange={handleChange}
-        inputFormat="DD/MM/YYYY HH:MM"
-
+        onChange={onChange}
+        value={value}
+        inputFormat="DD/MM/YYYY hh:mm"
+        disablePast={disablePast}
         components={{
           OpenPickerIcon: DateRangeOutlined,
         }}
@@ -32,14 +40,14 @@ export default function MaterialUIPickers({ label, current, helperText }) {
             sx={{
               "& .css-k4qjio-MuiFormHelperText-root": {
                 fontSize: 8,
-                color:theme.palette.primary.lightText60
+                color: theme.palette.primary.lightText60,
               },
               "& .css-i4bv87-MuiSvgIcon-root": {
                 fontSize: 12,
               },
               "& .css-19qh8xo-MuiInputBase-input-MuiOutlinedInput-input": {
                 fontSize: 12,
-                color:theme.palette.primary.black
+                color: theme.palette.primary.black,
               },
             }}
             InputLabelProps={{

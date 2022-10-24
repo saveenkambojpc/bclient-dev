@@ -9,18 +9,26 @@ import Paper from "@mui/material/Paper";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SyncOutlinedIcon from "@mui/icons-material/SyncOutlined";
 import { Button, Grid, TextField, Typography } from "@mui/material";
-// import SearchIcon from "@mui/icons-material/Search";
-// import SelectInput from "./AddVisit/SelectInput";
 import TableDataCell from "./TableDataCell";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { theme } from "../helper/Theme";
 import { RawOff } from "@mui/icons-material";
+import addVisit, { visitorList } from "../../redux/features/addVisit";
 
-function createData(id, mobile, email, visitorName, govUid, dob) {
-  return { id, mobile, email, visitorName, govUid, dob };
-}
+function generateRows(
+  length,
+  singlePointOfContact,
+  noOfVisitor,
+  mobileNumberChange,
+  emailChange,
+  visitorNameChange,
+  govIdChange,
+  dobChange
+) {
+  const resetHandler = () => {
+    console.log("you clicked on reset button");
+  };
 
-function generateRows(length, singlePointOfContact, noOfVisitor) {
   if (singlePointOfContact) {
     length = 1;
   }
@@ -62,21 +70,43 @@ function generateRows(length, singlePointOfContact, noOfVisitor) {
           <TableDataCell
             inputType={"number"}
             width={"20%"}
-            hasSelect
             selectValue={"+91"}
+            onChange={mobileNumberChange}
+            inputName={`mobileNumber-id${i}`}
+            hasSelect
             hasIcon
           />
 
-          <TableDataCell width={"18%"} hasIcon />
-          <TableDataCell width={"18%"} hasSelect selectValue={"Mr ."} />
+          <TableDataCell
+            inputType={"email"}
+            width={"18%"}
+            onChange={emailChange}
+            inputName={`email-id${i}`}
+            hasIcon
+          />
+          <TableDataCell
+            width={"18%"}
+            hasSelect
+            selectValue={"Mr ."}
+            inputType={"text"}
+            onChange={visitorNameChange}
+            inputName={`visitorName-id${i}`}
+          />
           <TableDataCell
             width={"20%"}
             hasSelect
             inputType={"number"}
             selectValue={"UIDAI"}
+            onChange={govIdChange}
+            inputName={`govId-id${i}`}
           />
 
-          <TableDataCell width={"16%"} />
+          <TableDataCell
+            width={"16%"}
+            inputType={"date"}
+            onChange={dobChange}
+            inputName={`dob-id${i}`}
+          />
 
           <TableCell
             align="left"
@@ -87,13 +117,14 @@ function generateRows(length, singlePointOfContact, noOfVisitor) {
               alignItems: "center",
             }}
           >
-            <SyncOutlinedIcon sx={{ rotate: "90deg", fontSize: 18 }} />
+            <button onClick={resetHandler} id={`reset-id${i}`}>
+              <SyncOutlinedIcon sx={{ rotate: "90deg", fontSize: 18 }} />
+            </button>
           </TableCell>
         </Grid>
 
         <Grid>
-
-        {false && (
+          {false && (
             <div className="px-3 pb-1">
               <Typography
                 style={{ fontSize: 10, color: theme.palette.primary.main }}
@@ -174,6 +205,76 @@ function generateRows(length, singlePointOfContact, noOfVisitor) {
 export default function VisitorListTable({ tableSize }) {
   const addVisitState = useSelector((store) => store.addVisit);
   const { singlePointOfContact, noOfVisitor } = addVisitState;
+
+  const dispatch = useDispatch();
+
+  const mobileNumberChange = (e) => {
+    // Extract id from name
+    const id = parseInt(e.target.name.slice(-1));
+    const updatedArr = [];
+
+    for (const item of addVisitState.visitorList) {
+      if (item.id === id) {
+        updatedArr.push({ ...item, mobile: e.target.value });
+      } else {
+        updatedArr.push(item);
+      }
+    }
+    dispatch(visitorList(updatedArr));
+  };
+
+  const emailChange = (e) => {
+    const id = parseInt(e.target.name.slice(-1));
+    const updatedArr = [];
+
+    for (const item of addVisitState.visitorList) {
+      if (item.id === id) {
+        updatedArr.push({ ...item, email: e.target.value });
+      } else {
+        updatedArr.push(item);
+      }
+    }
+    dispatch(visitorList(updatedArr));
+  };
+  const visitorNameChange = (e) => {
+    const id = parseInt(e.target.name.slice(-1));
+    const updatedArr = [];
+
+    for (const item of addVisitState.visitorList) {
+      if (item.id === id) {
+        updatedArr.push({ ...item, visitorName: e.target.value });
+      } else {
+        updatedArr.push(item);
+      }
+    }
+    dispatch(visitorList(updatedArr));
+  };
+  const govIdChange = (e) => {
+    const id = parseInt(e.target.name.slice(-1));
+    const updatedArr = [];
+
+    for (const item of addVisitState.visitorList) {
+      if (item.id === id) {
+        updatedArr.push({ ...item, govId: e.target.value });
+      } else {
+        updatedArr.push(item);
+      }
+    }
+    dispatch(visitorList(updatedArr));
+  };
+  const dobChange = (e) => {
+    const id = parseInt(e.target.name.slice(-1));
+    const updatedArr = [];
+
+    for (const item of addVisitState.visitorList) {
+      if (item.id === id) {
+        updatedArr.push({ ...item, dob: e.target.value });
+      } else {
+        updatedArr.push(item);
+      }
+    }
+    dispatch(visitorList(updatedArr));
+  };
 
   return (
     <TableContainer component={Paper} style={{ boxShadow: "none" }}>
@@ -334,7 +435,16 @@ export default function VisitorListTable({ tableSize }) {
         </TableHead>
 
         <TableBody>
-          {generateRows(tableSize, singlePointOfContact, noOfVisitor)}
+          {generateRows(
+            tableSize,
+            singlePointOfContact,
+            noOfVisitor,
+            mobileNumberChange,
+            emailChange,
+            visitorNameChange,
+            govIdChange,
+            dobChange
+          )}
         </TableBody>
       </Table>
     </TableContainer>

@@ -11,7 +11,9 @@ import { theme } from "../helper/Theme";
 import CheckBoxComp from "../helper/CheckBoxComp";
 import Date from "../helper/Date";
 
-const VisitorDetails = ({ no }) => {
+const VisitorDetails = ({ no, data }) => {
+  const { mobile, email, visitorName, govId, dob } = data;
+
   return (
     <div className="mb-6">
       <div className="flex items-center space-x-3 mb-6">
@@ -45,22 +47,25 @@ const VisitorDetails = ({ no }) => {
             />
           </div>
           <div className="w-2/3 ">
-            <TextInput label="Mobile No" />
+            <TextInput label="Mobile No" value={mobile} />
           </div>
         </div>
 
         <div className="md:pr-3 md:w-1/2 w-full">
-          <TextInput label="Email ID" />
+          <TextInput label="Email ID" value={email} />
         </div>
       </div>
 
       <div className="mb-4 flex flex-wrap">
         <div className="md:pr-3 md:w-1/2 w-full mb-4 md:mb-0">
-          <TextInput label="Name" placeholder="Firstname Lastname" />
+          <TextInput
+            label="Name"
+            placeholder="Firstname Lastname"
+            value={visitorName}
+          />
         </div>
         <div className="md:pr-3 md:w-1/2 w-full">
-          {/* <DateTime label="Date of Birth" /> */}
-          <Date />
+          <Date disableFuture />
         </div>
       </div>
       <div className="mb-4 flex flex-wrap">
@@ -75,6 +80,7 @@ const VisitorDetails = ({ no }) => {
           <TextInput
             label="Government ID Number"
             placeholder="1234 2345 3456"
+            value={govId}
           />
         </div>
       </div>
@@ -90,6 +96,7 @@ const VisitorDetails = ({ no }) => {
           >
             Upload Government ID
             <Typography
+              component={"span"}
               style={{ display: "inline", fontWeight: 300, fontSize: 11 }}
             >
               (optional)
@@ -104,20 +111,19 @@ const VisitorDetails = ({ no }) => {
                   sx={{ color: theme.palette.primary.main, fontSize: 16 }}
                 />
               </Avatar>
-              <p className="">
-                <span
-                  className={`underline text-[${theme.palette.primary.main}]`}
+
+              <span
+                className={`underline text-[${theme.palette.primary.main}]`}
+              >
+                <Typography
+                  style={{ fontSize: 12, display: "inline", marginRight: 3 }}
                 >
-                  <Typography
-                    style={{ fontSize: 12, display: "inline", marginRight: 3 }}
-                  >
-                    Click to upload
-                  </Typography>
-                </span>
-                <Typography style={{ fontSize: 12, display: "inline" }}>
-                  or drag and drop
+                  Click to upload
                 </Typography>
-              </p>
+              </span>
+              <Typography style={{ fontSize: 12, display: "inline" }}>
+                or drag and drop
+              </Typography>
 
               <Typography
                 style={{ fontSize: 10, color: theme.palette.primary.muted }}

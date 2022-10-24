@@ -3,19 +3,23 @@ import { Autocomplete, Chip, InputAdornment, TextField } from "@mui/material";
 import { fontSize } from "@mui/system";
 import React from "react";
 
-const TextInput = ({ onChange, label, hasChip, chipLabel,placeholder, ...props }) => {
+const TextInput = ({ onChange, label,defaultValue, hasChip,required,chipLabel,placeholder,value, ...props }) => {
   return (
     <Autocomplete
       id=""
       sx={props}
       options={[]}
-      onChange={onChange}
       freeSolo
+      value={value}
       size="small"
       renderInput={(params) => (
         <>
           <TextField
             {...params}
+            onChange={onChange}
+            value={value}
+            required={required}
+            defaultValue={defaultValue}
             placeholder={placeholder}
             sx={{
               "& .MuiAutocomplete-input ": {

@@ -22,11 +22,6 @@ const Sidebar = () => {
       name: "View My Visitors",
       component: <VisibilityOutlined sx={{ fontSize: iconSize }} />,
     },
-    ,
-    {
-      name:'Temporary Pass',
-      component: <LogoutOutlined sx={{fontSize:iconSize}} />
-    },
     {
       name: "Reports",
       component: <ContentPasteOutlined sx={{ fontSize: iconSize }} />,
@@ -54,32 +49,33 @@ const Sidebar = () => {
     {
       name: "Logout",
       component: <LogoutOutlined sx={{ fontSize: iconSize }} />,
-    }
+    },
   ];
 
   return (
-    <div className="w-56 fixed top-0 h-full pr-3">
+    <div className="w-56 fixed top-0  pr-3">
       <div className="border-r">
-
-      <div className="py-4 pl-10">
-        <Logo />
-      </div>
-      <h6 className="text-[10px] font-semibold p-2 px-3">Access Bar</h6>
-      <ul className="text-xs ">
-        {content.map((item, index) => {
-          return (
-            <li
-              key={index}
-              className={`flex p-2 px-3 cursor-pointer items-center  ${
-                index === 0 ? `bg-[${theme.palette.primary.main}] text-white` : "hover:bg-gray-100"
-              } `}
-            >
-              {item.component}
-              <span className="ml-4 ">{item.name}</span>
-            </li>
-          );
-        })}
-      </ul>
+        <div className="py-4 pl-10">
+          <Logo />
+        </div>
+        <h6 className="text-[10px] font-semibold p-2 px-3">Access Bar</h6>
+        <ul className="text-xs ">
+          {content.map((item, index) => {
+            return (
+              <li
+                key={index}
+                className={`flex p-2 px-3 cursor-pointer items-center  ${
+                  index === 0
+                    ? `bg-[${theme.palette.primary.main}] text-white`
+                    : "hover:bg-gray-100"
+                } `}
+              >
+                {item.component}
+                <span className="ml-4 ">{item.name}</span>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Chip } from "@mui/material";
 
-import {theme} from '../helper/Theme'
+import { theme } from "../helper/Theme";
 
 export default function SelectInput({
   onChange,
@@ -19,11 +19,9 @@ export default function SelectInput({
   return (
     <div>
       <Autocomplete
-
         style={props}
         defaultValue={defaultValue}
         value={value}
-
         ListboxProps={{
           sx: { fontSize: 10 },
         }}
@@ -34,12 +32,13 @@ export default function SelectInput({
           "& .MuiInputBase-root": {
             padding: 0,
           },
-          '& .css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':{
-            borderColor:theme.palette.primary.main,
-        },
-        "& .css-1pnb9mc-MuiFormLabel-root-MuiInputLabel-root.Mui-focused":{
-          color:theme.palette.primary.main,
-      }
+          "& .css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+            {
+              borderColor: theme.palette.primary.main,
+            },
+          "& .css-1pnb9mc-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
+            color: theme.palette.primary.main,
+          },
         }}
         renderInput={(params) => (
           <TextField
@@ -49,11 +48,11 @@ export default function SelectInput({
               "& .MuiAutocomplete-input": {
                 fontSize: 12,
               },
-    
             }}
             InputLabelProps={{
               sx: { fontSize: 12 },
             }}
+            required
           />
         )}
         size="small"

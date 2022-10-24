@@ -11,16 +11,21 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import TemporaryPass from "./pages/TemporaryPass";
+import React from "react";
 
 
 function App() {
+
+
+
   return (
-    <div className="">   
+    <div className="">
       <Routes>
         <Route index element={<AddVisit />} />
-        <Route path="visitee" element={<Visitee />} />
+        <Route path="visitor/:id" element={<Visitee />} />
         <Route path="temppass" element={<TemporaryPass />} />
       </Routes>
+
     </div>
   );
 }

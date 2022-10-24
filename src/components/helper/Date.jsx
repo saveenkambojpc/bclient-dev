@@ -8,9 +8,8 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { theme } from "./Theme";
 import { DateRangeOutlined } from "@mui/icons-material";
 
-
-export default function Date() {
-  const [value, setValue] = React.useState(dayjs("2014-08-18T21:11:54"));
+export default function Date({ disablePast, disableFuture, value }) {
+  const [value1, setValue] = React.useState(dayjs(value));
 
   const handleChange = (newValue) => {
     setValue(newValue);
@@ -22,7 +21,9 @@ export default function Date() {
         <DesktopDatePicker
           label="Date of Birth"
           inputFormat="DD/MM/YYYY"
-          value={value}
+          disableFuture={disableFuture}
+          disablePast={disablePast}
+          value={value1}
           size={"small"}
           onChange={handleChange}
           components={{
