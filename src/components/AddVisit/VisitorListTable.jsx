@@ -16,6 +16,7 @@ import { RawOff } from "@mui/icons-material";
 import addVisit, { visitorList } from "../../redux/features/addVisit";
 
 function generateRows(
+  visitorList,
   length,
   singlePointOfContact,
   noOfVisitor,
@@ -23,19 +24,33 @@ function generateRows(
   emailChange,
   visitorNameChange,
   govIdChange,
-  dobChange
+  dobChange,
+  resetHandler,
+  clearWholeTableHandle
 ) {
-  const resetHandler = () => {
-    console.log("you clicked on reset button");
+  const handleSearchPhone = (v) => {
+    query_visitor("phone", v);
+  };
+  const handleSearchEmail = (v) => {
+    query_visitor("email", v);
   };
 
+  const query_visitor = (type, value) => {
+    fetch(
+      `https://8000-prabal01pat-bioconfacer-5nq1bla1xl5.ws-us72.gitpod.io/query_visitor?${type}=${value}`
+    )
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
   if (singlePointOfContact) {
     length = 1;
   }
   const rows = [];
+
   for (let i = 1; i <= length; i++) {
     rows.push(
       <TableRow
+        key={i}
         sx={{
           "& .css-1ex1afd-MuiTableCell-root": {
             border: 0,
@@ -46,6 +61,7 @@ function generateRows(
         <hr />
 
         <Grid
+          key={i}
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -74,7 +90,14 @@ function generateRows(
             onChange={mobileNumberChange}
             inputName={`mobileNumber-id${i}`}
             hasSelect
+            paddingLeft
             hasIcon
+            inputValue={
+              visitorList.length !== 0 && visitorList[i - 1].phone_number
+            }
+            onClick={() => {
+              handleSearchPhone(visitorList[i - 1].phone_number);
+            }}
           />
 
           <TableDataCell
@@ -83,22 +106,32 @@ function generateRows(
             onChange={emailChange}
             inputName={`email-id${i}`}
             hasIcon
+            inputValue={visitorList.length !== 0 && visitorList[i - 1].email}
+            onClick={() => {
+              handleSearchEmail(visitorList[i - 1].email);
+            }}
           />
           <TableDataCell
             width={"18%"}
             hasSelect
             selectValue={"Mr ."}
             inputType={"text"}
+            paddingLeft
             onChange={visitorNameChange}
             inputName={`visitorName-id${i}`}
+            inputValue={visitorList.length !== 0 && visitorList[i - 1].name}
           />
           <TableDataCell
             width={"20%"}
             hasSelect
             inputType={"number"}
             selectValue={"UIDAI"}
+            paddingLeft
             onChange={govIdChange}
             inputName={`govId-id${i}`}
+            inputValue={
+              visitorList.length !== 0 && visitorList[i - 1].gov_id_number
+            }
           />
 
           <TableDataCell
@@ -106,6 +139,9 @@ function generateRows(
             inputType={"date"}
             onChange={dobChange}
             inputName={`dob-id${i}`}
+            inputValue={
+              visitorList.length !== 0 && visitorList[i - 1].date_of_birth
+            }
           />
 
           <TableCell
@@ -117,9 +153,11 @@ function generateRows(
               alignItems: "center",
             }}
           >
-            <button onClick={resetHandler} id={`reset-id${i}`}>
-              <SyncOutlinedIcon sx={{ rotate: "90deg", fontSize: 18 }} />
-            </button>
+            <SyncOutlinedIcon
+              onClick={resetHandler}
+              id={`reset-id${i}`}
+              sx={{ rotate: "90deg", fontSize: 18, cursor: "pointer" }}
+            />
           </TableCell>
         </Grid>
 
@@ -182,6 +220,7 @@ function generateRows(
                 textTransform: "none",
               }}
               variant="text"
+              onClick={clearWholeTableHandle}
             >
               <Typography
                 style={{
@@ -204,18 +243,23 @@ function generateRows(
 
 export default function VisitorListTable({ tableSize }) {
   const addVisitState = useSelector((store) => store.addVisit);
-  const { singlePointOfContact, noOfVisitor } = addVisitState;
+  const {
+    singlePointOfContact,
+    noOfVisitor,
+    visitorList: visitorListArr,
+  } = addVisitState;
 
   const dispatch = useDispatch();
 
   const mobileNumberChange = (e) => {
     // Extract id from name
+    console.log("onchange firedmobile is ", e.target.value);
     const id = parseInt(e.target.name.slice(-1));
     const updatedArr = [];
 
     for (const item of addVisitState.visitorList) {
-      if (item.id === id) {
-        updatedArr.push({ ...item, mobile: e.target.value });
+      if (item.visitor_id === id) {
+        updatedArr.push({ ...item, phone_number: e.target.value });
       } else {
         updatedArr.push(item);
       }
@@ -224,16 +268,18 @@ export default function VisitorListTable({ tableSize }) {
   };
 
   const emailChange = (e) => {
+    console.log("onChange firedemail is ", e.target.value);
     const id = parseInt(e.target.name.slice(-1));
     const updatedArr = [];
 
     for (const item of addVisitState.visitorList) {
-      if (item.id === id) {
+      if (item.visitor_id === id) {
         updatedArr.push({ ...item, email: e.target.value });
       } else {
         updatedArr.push(item);
       }
     }
+
     dispatch(visitorList(updatedArr));
   };
   const visitorNameChange = (e) => {
@@ -241,8 +287,8 @@ export default function VisitorListTable({ tableSize }) {
     const updatedArr = [];
 
     for (const item of addVisitState.visitorList) {
-      if (item.id === id) {
-        updatedArr.push({ ...item, visitorName: e.target.value });
+      if (item.visitor_id === id) {
+        updatedArr.push({ ...item, name: e.target.value });
       } else {
         updatedArr.push(item);
       }
@@ -254,8 +300,8 @@ export default function VisitorListTable({ tableSize }) {
     const updatedArr = [];
 
     for (const item of addVisitState.visitorList) {
-      if (item.id === id) {
-        updatedArr.push({ ...item, govId: e.target.value });
+      if (item.visitor_id === id) {
+        updatedArr.push({ ...item, gov_id_number: e.target.value });
       } else {
         updatedArr.push(item);
       }
@@ -267,12 +313,51 @@ export default function VisitorListTable({ tableSize }) {
     const updatedArr = [];
 
     for (const item of addVisitState.visitorList) {
-      if (item.id === id) {
-        updatedArr.push({ ...item, dob: e.target.value });
+      if (item.visitor_id === id) {
+        updatedArr.push({ ...item, date_of_birth: e.target.value });
       } else {
         updatedArr.push(item);
       }
     }
+    dispatch(visitorList(updatedArr));
+  };
+
+  const resetHandler = (e) => {
+    const id = parseInt(e.target.id.slice(-1));
+    const updatedArr = [];
+
+    for (const item of addVisitState.visitorList) {
+      if (item.visitor_id === id) {
+        updatedArr.push({
+          id: id,
+          phone_number: "",
+          email: "",
+          name: "",
+          gov_id_number: "",
+          date_of_birth: "",
+        });
+      } else {
+        updatedArr.push(item);
+      }
+    }
+
+    dispatch(visitorList(updatedArr));
+  };
+
+  const clearWholeTableHandle = () => {
+    const updatedArr = [];
+
+    for (let i = 1; i <= addVisitState.visitorList.length; i++) {
+      updatedArr.push({
+        id: i,
+        mobile: "",
+        email: "",
+        visitorName: "",
+        govId: "",
+        dob: "",
+      });
+    }
+
     dispatch(visitorList(updatedArr));
   };
 
@@ -300,7 +385,6 @@ export default function VisitorListTable({ tableSize }) {
                 display: "flex",
                 justifyContent: "space-between",
                 width: "100%",
-                gap: 6,
               }}
             >
               <TableCell
@@ -331,6 +415,7 @@ export default function VisitorListTable({ tableSize }) {
                 >
                   Mobile No
                   <Typography
+                    component={"span"}
                     style={{
                       display: "inline",
                       fontWeight: theme.fontWeight.weight300,
@@ -364,6 +449,7 @@ export default function VisitorListTable({ tableSize }) {
                 >
                   Visitor's Name
                   <Typography
+                    component={"span"}
                     style={{
                       display: "inline",
                       fontWeight: theme.fontWeight.weight300,
@@ -385,6 +471,7 @@ export default function VisitorListTable({ tableSize }) {
                 >
                   Gov ID Number
                   <Typography
+                    component={"span"}
                     style={{
                       display: "inline",
                       fontWeight: theme.fontWeight.weight300,
@@ -407,6 +494,7 @@ export default function VisitorListTable({ tableSize }) {
                 >
                   DOB
                   <Typography
+                    component={"span"}
                     style={{
                       display: "inline",
                       fontWeight: theme.fontWeight.weight300,
@@ -436,6 +524,7 @@ export default function VisitorListTable({ tableSize }) {
 
         <TableBody>
           {generateRows(
+            visitorListArr,
             tableSize,
             singlePointOfContact,
             noOfVisitor,
@@ -443,7 +532,9 @@ export default function VisitorListTable({ tableSize }) {
             emailChange,
             visitorNameChange,
             govIdChange,
-            dobChange
+            dobChange,
+            resetHandler,
+            clearWholeTableHandle
           )}
         </TableBody>
       </Table>

@@ -6,19 +6,20 @@ const initialState = {
     visitorFor: 'self',
     visitorType: 'visitor',
     isWifiRequired: false,
-    visitingLocation: '',
-    buildingName: '',
-    visitorSubType: '',
-    visitIntiation: "",
-    validUntil: "",
+    visitingLocation: null,
+    buildingName: null,
+    visitorSubType: null,
+    visitIntiation: dayjs(),
+    visitUntil: dayjs(),
     purposeOfVisit: 'Official',
-    visitorCompanyAddress: '',
+    visitorCompanyAddress: null,
     singlePointOfContact: false,
-    noOfVisitor: null,
-
-
-
-
+    noOfVisitor: '',
+    attendance_location:'',
+    wifi_duration:null,
+    employeeSearch:'',
+    searchEmailVisitor:'',
+    searchPhoneVisitor:''
 }
 
 const visitorForSlice = createSlice({
@@ -58,8 +59,10 @@ const visitorForSlice = createSlice({
         visitIntiation: (state, action) => {
             state.visitIntiation = action.payload
         },
-        visitUntil: (state, action) => {
-            state.validUntil = action.payload
+
+        visitUntilChange: (state, action) => {
+            // console.log('inside redux', action.payload);
+            state.visitUntil = action.payload
         },
 
         // Visitor List Table
@@ -67,11 +70,24 @@ const visitorForSlice = createSlice({
             state.visitorList = action.payload
         },
 
+        wifiDurationChange: (state,action) => {
+            state.wifi_duration = action.payload
+        }
+,
+        employeeSearchChange : (state, action) =>{
+            state.employeeSearch = action.payload
+        },
+
+  
+
+        
+        
+
 
 
     }
 })
 
-export const { visitorFor, visitorType, visitingLocation, buildingName, visitorSubType, wifiRequired, noOfVisitor, purposeOfVisit, visitorCompanyAddress, singlePointOfContact, visitUntil, visitIntiation, visitorList } = visitorForSlice.actions
+export const { visitorFor, visitorType, visitingLocation, buildingName, visitorSubType, wifiRequired, noOfVisitor, purposeOfVisit, visitorCompanyAddress, singlePointOfContact, visitUntilChange, visitIntiation, visitorList , wifiDurationChange, employeeSearchChange} = visitorForSlice.actions
 
 export default visitorForSlice.reducer

@@ -1,21 +1,10 @@
 import PersonAdd from "@mui/icons-material/PersonAdd";
-import {
-  Alert,
-  Button,
-  Checkbox,
-  Divider,
-  FormControlLabel,
-  Grid,
-  Radio,
-  Typography,
-} from "@mui/material";
+import { Alert, Button, Checkbox, Divider, Typography } from "@mui/material";
 
 import React, { useEffect, useRef, useState } from "react";
 import DateTime from "../components/helper/DateTime";
 import { useSelector, useDispatch } from "react-redux";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
-
-import { CSVLink, CSVDownload } from "react-csv";
 
 import addVisit, {
   visitorType,
@@ -28,9 +17,10 @@ import addVisit, {
   purposeOfVisit,
   visitorCompanyAddress,
   singlePointOfContact,
-  visitUntil,
   visitIntiation,
   visitorList,
+  visitUntilChange,
+  employeeSearchChange,
 } from "../redux/features/addVisit";
 import VisitorListTable from "../components/AddVisit/VisitorListTable";
 import SelectInput from "../components/helper/SelectInput";
@@ -44,11 +34,9 @@ import { theme } from "../components/helper/Theme";
 import RadioButtonComp from "../components/helper/RadioButtonComp";
 import SearchTextField from "../components/helper/SearchTextField";
 import dayjs from "dayjs";
-import AlertComp from "../components/helper/AlertComp";
 
 const AddVisit = () => {
   const [options, setOption] = React.useState();
-
   const dispatch = useDispatch();
   const addVisitState = useSelector((store) => store.addVisit);
 
@@ -78,12 +66,17 @@ const AddVisit = () => {
 
     for (let i = 1; i <= newInputValue; i++) {
       let obj = {
-        id: i,
-        mobile: null,
-        email: null,
-        visitorName: null,
-        govId: null,
-        dob: null,
+        visitor_id: i,
+        name: "",
+        company: "",
+        email: "",
+        country_code: 0,
+        phone_number: "",
+        visitor_type: addVisitState.visitorType,
+        visitor_subtype: addVisitState.visitorSubType,
+        gov_id_type: "",
+        gov_id_number: "",
+        date_of_birth: "",
       };
 
       temp.push(obj);
@@ -99,7 +92,7 @@ const AddVisit = () => {
     dispatch(purposeOfVisit(newInputValue));
   };
 
-  const visitorCompanyAddressChange = (e, newInputValue) => {
+  const visitorCompanyAddressChange = (e) => {
     dispatch(visitorCompanyAddress(e.target.value));
   };
 
@@ -108,41 +101,103 @@ const AddVisit = () => {
   };
 
   const validUntilChange = (newValue) => {
-    console.log("Valid Until Change", newValue);
-    dispatch(visitUntil(dayjs(newValue)));
-
-    // onChange={newValue => setValue(newValue)}
+    dispatch(visitUntilChange(newValue));
   };
 
-  const handleButtonDisable = () =>{
-
-    
-    return true;
-  }
-
+  // Add Visit Form Request
   const addVisitSubmit = (e) => {
     e.preventDefault();
+
+    const {
+      visitorFor,
+      visitorType,
+      isWifiRequired,
+      visitingLocation,
+      buildingName,
+      visitorSubType,
+      visitIntiation,
+      visitUntil,
+      purposeOfVisit,
+      visitorCompanyAddress,
+      singlePointOfContact,
+      noOfVisitor,
+      visitorList,
+      attendance_location,
+      wifi_duration,
+    } = addVisitState;
+
+    const data = {
+      to_meet_employee_id: 0,
+      visit_location: visitingLocation,
+      building_name: buildingName,
+      attendance_location: attendance_location,
+      date_of_issue: visitIntiation,
+      valid_until: visitUntil,
+      visit_purpose: purposeOfVisit,
+      is_spoc: singlePointOfContact,
+      spoc_id: 0,
+      no_of_visitors: noOfVisitor,
+      wifi_required: isWifiRequired,
+      wifi_duration: wifi_duration,
+      visitors_list: visitorList,
+    };
 
     // Simple POST request with a JSON body using fetch
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(addVisitState),
+      body: JSON.stringify(data),
     };
-    fetch("http://localhost:5000/api/addVisit/addVisitForm", requestOptions)
+    fetch(
+      "https://8000-prabal01pat-bioconfacer-5nq1bla1xl5.ws-us72.gitpod.io/create_visit",
+      requestOptions
+    )
       .then((response) => response.json())
-      .then((data) => this.setState({ postId: data.id }));
+      .then((data) => console.log(data));
+  };
+
+  // Employee Search Functionality
+  const handleEmployeeSearchChange = (event) => {
+    console.log(event.target.value);
+    dispatch(employeeSearchChange(event.target.value));
+  };
+
+  const handleEmployeeSearchClick = () => {
+    console.log("you clicked on search")
+  };
+
+  const handleVisitorSearchByPhone = () => {
+    console.log("val is ", addVisitState.employeeSearch);
+
+    const searchItem = addVisitState.employeeSearch;
+
+    // Get Request
+    fetch(
+      `https://8000-prabal01pat-bioconfacer-5nq1bla1xl5.ws-us72.gitpod.io/query_visitor?phone=${searchItem}`
+    )
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   };
 
   React.useEffect(() => {
-    // dispatch(visitIntiation(dayjs()));
-    console.log("You effect running");
+    dispatch(visitIntiation(dayjs()));
     fetch("http://localhost:5000/api/fetch/options")
       .then((res) => res.json())
       .then((options) => {
         setOption(options);
       });
   }, []);
+
+  // For Add Visit button disable and enable
+  const isVisitorListFilled = addVisitState.visitorList.every((item) => {
+    return (
+      item.mobile !== "" &&
+      item.email !== "" &&
+      item.visitorName !== "" &&
+      item.govId !== "" &&
+      item.dob !== ""
+    );
+  });
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   return (
@@ -203,7 +258,7 @@ const AddVisit = () => {
             </div>
           </div>
 
-          <form onSubmit={addVisitSubmit}>
+          <form onSubmit={addVisitSubmit} autoCorrect={false}>
             {/* Visitor for : Self , Other */}
             <div className="flex items-center mb-3">
               <span className="mr-5 ml-4 ">
@@ -243,7 +298,10 @@ const AddVisit = () => {
                     helperText={
                       "Search for Employee Using Employee Name / Employee Name"
                     }
+                    onChange={handleEmployeeSearchChange}
                     placeholder="To Meet"
+                    onClick={handleEmployeeSearchClick}
+                    value={addVisitState.searchEmployee}
                   />
 
                   {/* Search Result */}
@@ -326,6 +384,7 @@ const AddVisit = () => {
                       options={options ? options.visitorSubType : []}
                       onChange={visitorSubTypeChange}
                       label={"Visitor Sub-Type"}
+                      value={addVisitState.visitorSubType}
                     />
                   )}
                   {addVisitState.visitorType === "vendor" && (
@@ -383,7 +442,7 @@ const AddVisit = () => {
                 )}
               </div>
 
-              {/* <div className="w-full flex mt-6">
+              <div className="w-full flex mt-6">
                 <div className="md:w-1/3 pr-3">
                   <DateTime
                     label={"Visit Initiation"}
@@ -400,7 +459,7 @@ const AddVisit = () => {
                     disablePast
                   />
                 </div>
-              </div> */}
+              </div>
 
               <div className="w-full flex flex-wrap">
                 <div className="md:w-1/3 pr-3 w-full my-6 md:mb-0">
@@ -455,9 +514,11 @@ const AddVisit = () => {
                     <SelectInput
                       onChange={noOfVisitorChange}
                       label={"Number of Visitor"}
-                      options={options ? options.noOfVisitor : []}
-                      value={addVisit.noOfVisitor}
-                      defaultValue={addVisit.noOfVisitor}
+                      options={
+                        options ? options.noOfVisitor : ["1", "2", "3", "4", ""]
+                      }
+                      value={addVisitState.noOfVisitor}
+                      defaultValue={addVisitState.noOfVisitor}
                     />
                   </div>
                 </div>
@@ -497,7 +558,6 @@ const AddVisit = () => {
                         label={"Wifi Required Duration"}
                         options={options ? options.wifiDuration : []}
                       />
-                      // <span></span>
                     )}
                   </div>
                 </>
@@ -567,7 +627,13 @@ const AddVisit = () => {
                 size="small"
                 name="addvisitsubmit"
                 variant="contained"
-                disabled={handleButtonDisable()}
+                disabled={
+                  !addVisitState.visitingLocation ||
+                  !addVisitState.buildingName ||
+                  !addVisitState.visitorSubType ||
+                  !addVisitState.noOfVisitor ||
+                  !isVisitorListFilled
+                }
               >
                 Add Visit
               </Button>

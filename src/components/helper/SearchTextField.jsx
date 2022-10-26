@@ -8,13 +8,16 @@ import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
 import { theme } from "./Theme";
 
-const SearchTextField = ({label, helperText, placeholder }) => {
+const SearchTextField = ({label, helperText, placeholder, onClick , onChange}) => {
+
+
   return (
       <TextField
         fullWidth
         placeholder={placeholder}
         helperText={helperText}
         label={label}
+        onChange={onChange}
         size="small"
         sx={{
           "& .css-19qh8xo-MuiInputBase-input-MuiOutlinedInput-input ": {
@@ -31,6 +34,7 @@ const SearchTextField = ({label, helperText, placeholder }) => {
           endAdornment: (
             <InputAdornment>
               <IconButton
+                onClick={onClick}
                 style={{
                   backgroundColor: theme.palette.primary.main,
                   color: "white",

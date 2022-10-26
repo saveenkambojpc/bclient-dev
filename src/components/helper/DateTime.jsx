@@ -15,19 +15,19 @@ export default function MaterialUIPickers({
   onChange,
   disablePast,
   readOnly,
-  value
+  value,
 }) {
 
-  // const [value, setValue] = React.useState(dayjs('2022-04-07'));
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateTimePicker
         readOnly={readOnly}
         label={label}
         ampm={false}
+        ampmInClock={true}
         onChange={onChange}
         value={value}
-        inputFormat="DD/MM/YYYY hh:mm"
+        inputFormat="DD/MM/YYYY HH:mm"
         disablePast={disablePast}
         components={{
           OpenPickerIcon: DateRangeOutlined,
@@ -35,8 +35,8 @@ export default function MaterialUIPickers({
         renderInput={(params) => (
           <TextField
             helperText={helperText}
-            placeholder="Saveen"
             fullWidth
+            value={value}
             sx={{
               "& .css-k4qjio-MuiFormHelperText-root": {
                 fontSize: 8,
